@@ -294,10 +294,6 @@ class my_leaflet_map
       echo "   //console.log( 'Leaflet version ', L.version );\n";
       echo "   //\n";
       echo "   var popuptext = 'Breite: '+lat+'<br>Länge: '+lon+'<br>';\n\n";
-       echo "   var url1 = '<a href=\"karte_ipac_umkreis.php?laenge='+lon+'&amp;breite='+lat+'&amp;umkreis=500'+'\">Umkreissuche 500m</a><br>';\n";
-       echo "   var url2 = '<a href=\"karte_ipac_umkreis.php?laenge='+lon+'&amp;breite='+lat+'&amp;umkreis=1000'+'\">Umkreissuche 1 km</a><br>';\n";
-       echo "   var url3 = '<a href=\"karte_ipac_umkreis.php?laenge='+lon+'&amp;breite='+lat+'&amp;umkreis=5000'+'\">Umkreissuche 5 km</a><br>';\n";
-       echo "   popuptext = popuptext+'<br>'+url1+url2+url3\n\n";
       echo "   popup\n";
       echo "    .setLatLng(e.latlng)\n";
       echo "    .setContent( popuptext )\n";
