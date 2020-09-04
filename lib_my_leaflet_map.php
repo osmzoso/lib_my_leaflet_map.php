@@ -9,23 +9,28 @@ Easy access to the [Leaflet.js](https://leafletjs.com/) library with PHP.
 
 ## Installation
 
-The following files are required for a simple example:  
+The following files are required for a simple example.php (see below):  
 (tested with Leaflet.js version 1.3.4)  
 
-- **lib_my_leaflet_map.php**  
-- **example.php** (see below)  
-
-The following leaflet files are required in a subdirectory **./libs/leaflet/**:  
-
-- **leaflet.css**  
-- **leaflet.js**  
-- **marker1.png ... marker8.png**  
-- **marker-shadow.png**  
-
-The following leaflet files are required in a subdirectory **./libs/leaflet/images/**:  
-
-- **layers.png**  
-- **layers-2x.png**  
+    +---example.php
+    +---lib_my_leaflet_map.php
+    +---libs
+        +---leaflet
+            +---leaflet.css
+            +---leaflet.js
+            +---marker-icon.png
+            +---marker-shadow.png
+            +---marker1.png
+            +---marker2.png
+            +---marker3.png
+            +---marker4.png
+            +---marker5.png
+            +---marker6.png
+            +---marker7.png
+            +---marker8.png
+            +---images
+                +---layers.png
+                +---layers-2x.png
 
 
 ## example.php
@@ -41,7 +46,7 @@ include './lib_my_leaflet_map.php';
 // new map object
 $map = new my_leaflet_map;
 // add Marker
-$map->add_marker( 52.5185551, 13.3757533, 'Marker1', 'Berlin Reichstag' );
+$map->add_marker( 52.5185551, 13.3757533, 'Marker1', 'Berlin Reichstag', true );
 // add polyline
 $lat_lon[0] = 52.5191325;  // lat
 $lat_lon[1] = 13.3688328;  // lon
@@ -67,14 +72,14 @@ $map->set_color( '#bb1122' );
 $map->set_opacity( 0.6 );
 $map->set_fillcolor( 'none' );
 $map->add_circle( 52.5143171, 13.3634942, 300, '' );
-// add circle 2
-$map->set_all( '#992255', 1.0, 4, '4 7', '#aa0000', 0.3 );
+// add circle 2, set all properties (color, opacity, weight, dasharray, fillcolor, fillopacity)
+$map->set_properties( '#992255', 1.0, 4, '4 7', '#aa0000', 0.3 );
 $map->add_circle( 52.5183113, 13.3657672, 200, 'This is a dotted circle' );
 // add rectangle
-$map->set_all( '#005588', 1.0, 3, 'none', '#005588', 0.3 );
+$map->set_properties( '#005588', 1.0, 3, 'none', '#005588', 0.3 );
 $map->add_rectangle( 52.5152569, 13.3788740, 52.5104557, 13.3856956, 'This is a rectangle' );
 // add the red dotted boundingbox (with the current coordinates of the object)
-$map->set_all( '#ff0000', 1.0, 2, '5 5', 'none', 1.0 );
+$map->set_properties( '#ff0000', 1.0, 2, '5 5', 'none', 1.0 );
 $map->add_rectangle( $map->bbox_min_lat, $map->bbox_min_lon, $map->bbox_max_lat, $map->bbox_max_lon, '' );
 // finish -> print javascript
 $map->print_javascript( 'xxx' );
@@ -83,6 +88,7 @@ $map->print_javascript( 'xxx' );
 
 <div id="xxx" style="height: 75vh; width: 100%;"></div>
 </html>
+
 
 ```
 
@@ -99,7 +105,7 @@ class my_leaflet_map
    public $bbox_max_lat = -90;
    public $bbox_max_lon = -180;
 
-   // attributes (color, opacity, weight, dasharray)
+   // attributes (color, opacity, weight, dasharray, fillcolor, fillopacity)
    public $color = '#0000ff';
    public $opacity = 0.5;
    public $weight = 10;
@@ -107,14 +113,15 @@ class my_leaflet_map
    public $fillcolor = '#00ff00';   // hexcolor or 'none'
    public $fillopacity = 0.3;
 
-   // set attributes
+   // set single attribute
    function set_color( $v )       { $this->color       = $v; }
    function set_opacity( $v )     { $this->opacity     = $v; }
    function set_weight( $v )      { $this->weight      = $v; }
    function set_dasharray( $v )   { $this->dasharray   = $v; }
    function set_fillcolor( $v )   { $this->fillcolor   = $v; }
    function set_fillopacity( $v ) { $this->fillopacity = $v; }
-   function set_all( $v1, $v2, $v3, $v4, $v5, $v6 ) {
+   // set all attributes once
+   function set_properties( $v1, $v2, $v3, $v4, $v5, $v6 ) {
       $this->set_color( $v1 );
       $this->set_opacity( $v2 );
       $this->set_weight( $v3 );
@@ -123,10 +130,11 @@ class my_leaflet_map
       $this->set_fillopacity( $v6 );
    }
 
-   function add_marker( $lat, $lon, $marker, $popuptext ) {
+   function add_marker( $lat, $lon, $marker, $popuptext, $openpopup ) {
       $this->js_code .= 'L.marker(['.$lat.','.$lon.'], {icon: '.$marker.'})';
       if( $popuptext != '' ) { $this->js_code .= ".bindPopup('".$popuptext."')"; }
       $this->js_code .= '.addTo(l_standort)';
+      if( $openpopup ) { $this->js_code .= '.openPopup()'; }
       $this->js_code .= ";\n";
       
       $this->adjust_boundingbox( $lat, $lon );
