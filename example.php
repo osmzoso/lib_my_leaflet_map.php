@@ -1,59 +1,3 @@
-# lib_my_leaflet_map.php
-
-Easy access with PHP to the [Leaflet.js](https://leafletjs.com/) library.  
-
-
-## Installation
-
-The following files are required for the simple example.php (see below):  
-(tested with Leaflet.js version 1.3.4)  
-
-    +---example.php
-    +---lib_my_leaflet_map.php
-    +---libs
-        +---leaflet
-            +---leaflet.css
-            +---leaflet.js
-            +---marker-icon.png
-            +---marker-shadow.png
-            +---marker1.png
-            +---marker2.png
-            +---marker3.png
-            +---marker4.png
-            +---marker5.png
-            +---marker6.png
-            +---marker7.png
-            +---marker8.png
-            +---images
-                +---layers.png
-                +---layers-2x.png
-
-
-## Public Methods
-
-    set_color( $color )
-    set_opacity( $opacity )
-    set_weight( $weight )
-    set_dasharray( $dasharray )
-    set_fillcolor( $fillcolor )
-    set_fillopacity( $fillopacity )
-    set_properties( $color, $opacity, $weight, $dasharray, $fillcolor, $fillopacity )
-
-    add_marker( $lon, $lat, $marker, $popuptext, $openpopup )
-    add_polyline( array $lonlat )
-    add_line( $lon1, $lat1, $lon2, $lat2 )
-    add_polygon( array $lonlat, $popuptext )
-    add_circle( $lon, $lat, $radius, $popuptext )
-    add_circlemarker( $lon, $lat )
-    add_rectangle( $lon1, $lat1, $lon2, $lat2, $popuptext )
-
-    print_javascript( $id )
-
-
-## Example
-
-```php
-
 <html>
 <h1>Demo lib_my_leaflet_map.php</h1>
 
@@ -109,6 +53,3 @@ $map->print_javascript( 'xxx' );
 
 <div id="xxx" style="height: 75vh; width: 100%;"></div>
 </html>
-
-
-```
