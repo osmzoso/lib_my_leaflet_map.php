@@ -50,11 +50,9 @@ class MyLeafletMap
     private function lonlat2str( array $lonlat ) {
         $lat_lon_str = '';
         for( $i=0; $i < count( $lonlat ); $i=$i+2 ) {
-            $lon = $lonlat[$i];
-            $lat = $lonlat[$i+1];
             if( $i > 0 ) { $lat_lon_str .= ','; }
-            $lat_lon_str .= '['.$lat.','.$lon.']';
-            $this->adjust_boundingbox( $lon, $lat );
+            $lat_lon_str .= '['.$lonlat[$i+1].','.$lonlat[$i].']';
+            $this->adjust_boundingbox( $lonlat[$i], $lonlat[$i+1] );
         }
     return $lat_lon_str;
     }
@@ -118,11 +116,7 @@ class MyLeafletMap
     }
 
     public function add_line( $lon1, $lat1, $lon2, $lat2 ) {
-        $lonlat[0] = $lon1;
-        $lonlat[1] = $lat1;
-        $lonlat[2] = $lon2;
-        $lonlat[3] = $lat2;
-        $this->add_polyline( $lonlat );
+        $this->add_polyline( array( $lon1, $lat1, $lon2, $lat2  ) );    // wrapper for a simple line
     }
 
     public function add_polygon( array $lonlat, $popuptext ) {
