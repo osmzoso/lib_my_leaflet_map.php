@@ -33,13 +33,12 @@ $map->add_polygon( $lonlat, 'This is a polygon' );
 // add rectangle
 $map->set_properties( '#005588', 1.0, 3, 'none', '#005588', 0.3 );
 $map->add_rectangle( 13.3788740, 52.5152569, 13.3856956, 52.5104557, 'This is a rectangle' );
-// add the red dotted boundingbox
+// finally add a red dotted rectangle with the coordinates of the boundingbox
 $map->set_properties( '#ff0000', 1.0, 2, '5 5', 'none', 1.0 );
 $map->add_rectangle( $map->bbox_min_lon, $map->bbox_min_lat, $map->bbox_max_lon, $map->bbox_max_lat, '' );
 // finish -> print the javascript code
 $map->print_javascript( 'map_berlin' );
-// print the coordinates of the boundingbox
-echo "Boundingbox: ".$map->bbox_min_lon.', '.$map->bbox_min_lat.' - '.$map->bbox_max_lon.', '.$map->bbox_max_lat,"\n";
+
 ?>
 
 <div id="map_berlin" style="height: 75vh; width: 100%;"></div>
